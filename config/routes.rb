@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :follows
+  resources :users
+  resources :likes
+  resources :ratings
+  resources :comments
+  resources :posts
+  get 'signin', to: 'sessions#new'
+  get 'auth/:provider/callback', to: 'sessions#create_oauth'
+  root 'posts#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
