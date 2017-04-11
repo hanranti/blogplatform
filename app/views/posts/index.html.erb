@@ -29,9 +29,9 @@
 <ul>
   <% @posts.each do |post| %>
     <li>
-      <h3><%= post.name %></h3>
+      <h3><%= link_to post.name, post %></h3>
       <a style="color:#808080"><%= link_to post.user, post.user %></a>
-      <p><%= post.text %></p>
+      <!--<p><%= post.text %></p>-->
     </li>
   <% end %>
 </ul>

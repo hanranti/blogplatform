@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
     has_many :ratings
     has_many :likes
     has_many :follows
+
+    def to_s
+        name
+    end
 end
