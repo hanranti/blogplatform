@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -45,6 +45,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem "better_errors"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
@@ -58,3 +59,38 @@ group :development do
   gem 'spring'
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'webmock'
+
+  # js tests
+  gem 'selenium-webdriver', '2.53.4'
+  gem "chromedriver-helper"
+  gem 'database_cleaner'
+end
+
+gem 'simplecov', require: false
+
+gem 'httparty'
+# bootstrap
+gem 'bootstrap-sass'
+group :development do
+  gem 'rails_layout'
+end
+
+# jquery
+gem 'jquery-turbolinks'
+
+gem 'rack-mini-profiler'
+
+gem 'sucker_punch', '~> 2.0'
+
+gem 'omniauth'
+
+gem 'omniauth-github'

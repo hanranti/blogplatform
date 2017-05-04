@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :ratings
   resources :comments
   resources :posts
+  resource :session, only: [:new, :create, :destroy]
   get 'signin', to: 'sessions#new'
   get 'auth/:provider/callback', to: 'sessions#create_oauth'
   root 'posts#index'
