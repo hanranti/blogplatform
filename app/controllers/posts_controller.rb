@@ -10,6 +10,10 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @comments = Comment.where(:post_id => params[:id])
+    @comment = Comment.new
+    @rating = Rating.where(:post_id => params[:id], :user => current_user).first
+    @rating = Rating.new unless @rating
   end
 
   # GET /posts/new
@@ -25,6 +29,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save

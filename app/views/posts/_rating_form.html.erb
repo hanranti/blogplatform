@@ -15,7 +15,7 @@
     <%= f.label :score %><br>
     <%= f.number_field :score %>
   </div>
-  <%= f.select :post_id, options_from_collection_for_select(@posts, :id, :to_s, selected: @rating.post_id) %>
+    <%= f.hidden_field :post_id, :value => @post.id %>
   <div class="actions">
     <%= f.submit %>
   </div>

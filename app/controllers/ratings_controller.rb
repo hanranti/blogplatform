@@ -1,10 +1,11 @@
 class RatingsController < ApplicationController
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
+  before_action :set_posts, only: [:new, :edit]
 
   # GET /ratings
   # GET /ratings.json
   def index
-    @ratings = Rating.all
+    @top_posts = Post.top_last_week
   end
 
   # GET /ratings/1
@@ -25,10 +26,12 @@ class RatingsController < ApplicationController
   # POST /ratings.json
   def create
     @rating = Rating.new(rating_params)
+    @rating.user = current_user
+    @posts = Post.all
 
     respond_to do |format|
       if @rating.save
-        format.html { redirect_to @rating, notice: 'Rating was successfully created.' }
+        format.html { redirect_to :back, notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else
         format.html { render :new }
@@ -42,7 +45,7 @@ class RatingsController < ApplicationController
   def update
     respond_to do |format|
       if @rating.update(rating_params)
-        format.html { redirect_to @rating, notice: 'Rating was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Rating was successfully updated.' }
         format.json { render :show, status: :ok, location: @rating }
       else
         format.html { render :edit }
@@ -67,8 +70,12 @@ class RatingsController < ApplicationController
       @rating = Rating.find(params[:id])
     end
 
+    def set_posts
+      @posts = Post.all
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def rating_params
-      params.require(:rating).permit(:score, :user_id, :post_id)
+      params.require(:rating).permit(:score, :post_id)
     end
 end

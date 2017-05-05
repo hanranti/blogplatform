@@ -15,7 +15,9 @@
     <%= f.label :text %><br>
     <%= f.text_area :text %>
   </div>
-  <%= f.select :post_id, options_from_collection_for_select(@posts, :id, :to_s, selected: @comment.post_id) %>
+  <div class="field">
+    <%= f.hidden_field :post_id, :value => @post.id %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
