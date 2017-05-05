@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     validates :password, format: { with: /([A-Z].*\d)|(\d.*[A-Z].*)/,message: "should contain one number and one capital letter" }
 
     def to_s
-        name
+        username
     end
 
 end
