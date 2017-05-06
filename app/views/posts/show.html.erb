@@ -5,15 +5,15 @@
 </h2>
 
 <p>
-  <%= @post.text %>
-</p>
-
-<p>
   <strong>Written by:</strong>
   <%= @post.user %>
 </p>
 
-<p><strong>Average rating:</strong> <%= @post.average_rating %></p>
+<p>
+  <%= @post.text %>
+</p>
+
+<p><strong>Average of <%= pluralize(@post.ratings.count, 'rating') %>:</strong> <%= @post.average_rating %></p>
 
 <%= render 'rating_form' %>
 
@@ -25,7 +25,11 @@
 
 <ul>
   <% @comments.each do |comment| %>
-    <li><strong><%= link_to comment.user, comment.user %>:</strong> comment.text</li>
+    <li><strong><%= link_to comment.user, comment.user %>:</strong> comment.text
+    <% if current_user %>
+      <%= link_to 'like', likes_path(liked: true, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-info" %>
+      <%= link_to 'dislike', likes_path(liked: false, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-danger" %></li>
+    <% end %>
   <% end %>
 </ul>
 

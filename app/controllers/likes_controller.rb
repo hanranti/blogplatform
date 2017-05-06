@@ -24,6 +24,7 @@ class LikesController < ApplicationController
   # POST /likes
   # POST /likes.json
   def create
+    byebug
     @like = Like.new(like_params)
 
     respond_to do |format|
@@ -69,6 +70,6 @@ class LikesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def like_params
-      params.require(:like).permit(:like, :user_id, :comment_id)
+      params.permit(:liked, :user_id, :comment_id)
     end
 end
