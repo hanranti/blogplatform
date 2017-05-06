@@ -24,12 +24,13 @@ class LikesController < ApplicationController
   # POST /likes
   # POST /likes.json
   def create
-    byebug
-    @like = Like.new(like_params)
+    @like = Like.where(:user_id => like_params[:user_id], :comment_id => like_params[:comment_id]).first
+    @like = Like.new(like_params) unless @like
+    else @like.update_attribute(:like, like_params[:like])
 
     respond_to do |format|
       if @like.save
-        format.html { redirect_to @like, notice: 'Like was successfully created.' }
+        format.html { redirect_to :back, notice: 'Like was successfully created.' }
         format.json { render :show, status: :created, location: @like }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class LikesController < ApplicationController
   def update
     respond_to do |format|
       if @like.update(like_params)
-        format.html { redirect_to @like, notice: 'Like was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Like was successfully updated.' }
         format.json { render :show, status: :ok, location: @like }
       else
         format.html { render :edit }
@@ -70,6 +71,6 @@ class LikesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def like_params
-      params.permit(:liked, :user_id, :comment_id)
+      params.permit(:like, :user_id, :comment_id)
     end
 end

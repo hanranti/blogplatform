@@ -4,7 +4,7 @@
   <%= @post.name %>
 </h2>
 
-<p>
+<p style="color:#808080">
   <strong>Written by:</strong>
   <%= @post.user %>
 </p>
@@ -25,11 +25,19 @@
 
 <ul>
   <% @comments.each do |comment| %>
-    <li><strong><%= link_to comment.user, comment.user %>:</strong> comment.text
-    <% if current_user %>
-      <%= link_to 'like', likes_path(liked: true, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-info" %>
-      <%= link_to 'dislike', likes_path(liked: false, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-danger" %></li>
-    <% end %>
+    <li>
+      <strong><%= link_to comment.user, comment.user %>:</strong>
+      <%= comment.text%>
+      <% if current_user %>
+        <%= link_to 'like', likes_path(like: true, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-info" %>
+        <%= link_to 'dislike', likes_path(like: false, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-danger" %>
+      <% end %>
+      <% if comment.likes_ratio > 0 %>
+        <p style="color:#008000">+<%= comment.likes_ratio %></p>
+      <% elsif comment.likes_ratio < 0 %>
+        <p style="color:#FF0000"><%= comment.likes_ratio %></p>
+      <% end %>
+    </li>
   <% end %>
 </ul>
 

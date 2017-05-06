@@ -30,7 +30,7 @@
   <% @posts.each do |post| %>
     <li>
       <h3><%= link_to post.name, post %></h3>
-      <a style="color:#808080"><%= link_to post.user, post.user %></a>
+      <p style="color:#808080"><%= link_to post.user, post.user %></p>
       <!--<p><%= post.text %></p>-->
     </li>
   <% end %>
