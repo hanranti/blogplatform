@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
     has_many :likes, dependent: :destroy
 
     validates :password, length: { minimum: 5 },
-                         format: { with: /([A-Z].*\d)|(\d.*[A-Z].*)/,message: "should contain one number and one capital letter" }
+                         format: { with: /([A-Z].*\d)|(\d.*[A-Z].*)/,message: "should contain one number and one capital letter" },
+                         :on => [:create, :update]
 #    validates :username, uniqueness: true,
 #                         length: { minimum:3, maximum: 20 }
 

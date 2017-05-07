@@ -1,5 +1,7 @@
 class LikesController < ApplicationController
   before_action :set_like, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
+  before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
 
   # GET /likes
   # GET /likes.json
@@ -43,7 +45,7 @@ class LikesController < ApplicationController
   # PATCH/PUT /likes/1.json
   def update
     respond_to do |format|
-      if @like.update(like_params)
+      if @like.user == current_user && @like.update(like_params)
         format.html { redirect_to :back, notice: 'Like was successfully updated.' }
         format.json { render :show, status: :ok, location: @like }
       else
@@ -56,7 +58,7 @@ class LikesController < ApplicationController
   # DELETE /likes/1
   # DELETE /likes/1.json
   def destroy
-    @like.destroy
+    @like.user == current_user && @like.destroy
     respond_to do |format|
       format.html { redirect_to likes_url, notice: 'Like was successfully destroyed.' }
       format.json { head :no_content }

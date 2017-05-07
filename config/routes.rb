@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   get 'signin', to: 'sessions#new'
   get 'auth/:provider/callback', to: 'sessions#create_oauth'
+  post 'blockuser', to: 'users#change_blocked_status'
   root 'posts#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

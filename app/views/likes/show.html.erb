@@ -15,5 +15,7 @@
   <%= @like.comment_id %>
 </p>
 
-<%= link_to 'Edit', edit_like_path(@like) %> |
+<% if current_user && current_user == @like.user %>
+  <%= link_to 'Edit', edit_like_path(@like) %> |
+<% end %>
 <%= link_to 'Back', likes_path %>

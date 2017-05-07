@@ -5,25 +5,26 @@
   <%= @user.username %>
 </p>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+<ul>
+  <% @user.posts.each do |post| %>
+    <li>
+      <h3><%= link_to post.name, post %></h3>
+      <p style="color:#808080"><%= link_to post.user, post.user %></p>
+      <!--<p><%= post.text %></p>-->
+    </li>
+  <% end %>
+</ul>
 
-<p>
-  <strong>Password confirmation:</strong>
-  <%= @user.password_confirmation %>
-</p>
-
-<p>
-  <strong>Admin:</strong>
-  <%= @user.admin %>
-</p>
-
-<p>
-  <strong>Blocked:</strong>
-  <%= @user.blocked %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if current_user && current_user.admin%>
+  <% if @user.admin %>
+    <span class="label label-success">Admin account</span><br>
+  <% end %>
+  <%= link_to 'Change blocked status', blockuser_path(id: @user.id), method: :post, class:"btn btn-danger" %>
+  <% if @user.blocked == true %>
+    <span class="label label-info">Account blocked</span>
+  <% end %>
+<% end%>
+<% if current_user == @user %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+<% end %>
 <%= link_to 'Back', users_path %>

@@ -10,7 +10,7 @@
 </p>
 
 <p>
-  <%= @post.text %>
+  <%= simple_format(@post.text) %>
 </p>
 
 <p><strong>Average of <%= pluralize(@post.ratings.count, 'rating') %>:</strong> <%= @post.average_rating %></p>
@@ -27,19 +27,24 @@
   <% @comments.each do |comment| %>
     <li>
       <strong><%= link_to comment.user, comment.user %>:</strong>
-      <%= comment.text%>
+      <%= comment.text %>
+      <% if current_user == comment.user %>
+        <%= link_to 'edit comment', edit_comment_path(comment), class:"btn btn-success" %>
+      <% end %>
       <% if current_user %>
         <%= link_to 'like', likes_path(like: true, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-info" %>
         <%= link_to 'dislike', likes_path(like: false, user_id: current_user.id, comment_id: comment.id), method: :post, class:"btn btn-danger" %>
       <% end %>
       <% if comment.likes_ratio > 0 %>
-        <p style="color:#008000">+<%= comment.likes_ratio %></p>
+        <p style="display:inline;color:#008000">+<%= comment.likes_ratio %></p>
       <% elsif comment.likes_ratio < 0 %>
-        <p style="color:#FF0000"><%= comment.likes_ratio %></p>
+        <p style="display:inline;color:#FF0000"><%= comment.likes_ratio %></p>
       <% end %>
     </li>
   <% end %>
 </ul>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<% if current_user && current_user == @post.user %>
+  <%= link_to 'Edit post', edit_post_path(@post) %> |
+<% end %>
 <%= link_to 'Back', posts_path %>

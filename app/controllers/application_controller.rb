@@ -11,6 +11,14 @@ class ApplicationController < ActionController::Base
   end  
 
   def ensure_that_signed_in
-    redirect_to signin_path, notice:'you should be signed in' if current_user.nil?
+    redirect_to signin_path, notice:'You should be signed in!' if current_user.nil?
   end  
+
+  def ensure_that_not_blocked
+    redirect_to root_path, notice:'Your account is blocked!' if current_user && current_user.blocked?
+  end
+
+  def ensure_that_admin
+    redirect_to root_path, notice:'You are not admin!' if current_user && current_user.admin?
+  end
 end

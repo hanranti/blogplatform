@@ -2,6 +2,9 @@ class RatingsController < ApplicationController
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
   before_action :set_posts, only: [:new, :edit]
 
+  before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
+  before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
+
   # GET /ratings
   # GET /ratings.json
   def index
@@ -44,7 +47,7 @@ class RatingsController < ApplicationController
   # PATCH/PUT /ratings/1.json
   def update
     respond_to do |format|
-      if @rating.update(rating_params)
+      if @rating.user == current_user && @rating.update(rating_params)
         format.html { redirect_to :back, notice: 'Rating was successfully updated.' }
         format.json { render :show, status: :ok, location: @rating }
       else
@@ -57,7 +60,7 @@ class RatingsController < ApplicationController
   # DELETE /ratings/1
   # DELETE /ratings/1.json
   def destroy
-    @rating.destroy
+    @rating.destroy if @rating.user == current_user
     respond_to do |format|
       format.html { redirect_to ratings_url, notice: 'Rating was successfully destroyed.' }
       format.json { head :no_content }
