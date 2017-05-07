@@ -7,12 +7,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @like.user_id %>
+  <%= @like.user %>
 </p>
 
 <p>
   <strong>Comment:</strong>
-  <%= @like.comment_id %>
+  <%= @like.comment %>
 </p>
 
 <% if current_user && current_user == @like.user %>

@@ -6,7 +6,7 @@ class LikesController < ApplicationController
   # GET /likes
   # GET /likes.json
   def index
-    @likes = Like.all
+    @comments = Comment.top_last_week
   end
 
   # GET /likes/1

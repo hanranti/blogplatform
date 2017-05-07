@@ -15,20 +15,26 @@
 
 <p><strong>Average of <%= pluralize(@post.ratings.count, 'rating') %>:</strong> <%= @post.average_rating %></p>
 
-<%= render 'rating_form' %>
+<%= render 'new_rating_form' %>
 
 <h3>Comments</h3>
 
 <h4>New Comment</h4>
 
-<%= render 'comment_form' %>
+<%= render 'new_comment_form' %>
+
+<p style="display:inline"><strong>Most liked comment:</strong></p>
+
+<% comment = @most_liked_comment%>
+
+<%= render 'comment_form', comment: @most_liked_comment %>
 
 <ul>
   <% @comments.each do |comment| %>
     <li>
       <strong><%= link_to comment.user, comment.user %>:</strong>
       <%= comment.text %>
-      <% if current_user == comment.user %>
+      <% if current_user && current_user == comment.user %>
         <%= link_to 'edit comment', edit_comment_path(comment), class:"btn btn-success" %>
       <% end %>
       <% if current_user %>

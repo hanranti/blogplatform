@@ -17,4 +17,12 @@ class Comment < ActiveRecord::Base
     end
     amount
   end
+
+  def self.top_last_week
+    Comment.where(:created_at => 1.week.ago..Time.now).sort { |a, b| b.likes_ratio <=> a.likes_ratio }
+  end
+
+  def to_s
+    text
+  end
 end
