@@ -21,9 +21,13 @@
         <% if current_user && current_user.admin? %>
           <% if user.admin? %>
             <td><span class="label label-success">Admin account</span></td>
+          <% else %>
+            <td></td>
           <% end %>
           <% if user.blocked? %>
-          <td><span class="label label-info">Account blocked</span></td>
+            <td><span class="label label-info">Account blocked</span></td>
+          <% else %>
+            <td></td>
           <% end %>
           <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger' %></td>
         <% end %>
