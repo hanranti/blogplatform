@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_that_admin
-    redirect_to root_path, notice:'You are not admin!' if current_user && current_user.admin?
+    redirect_to root_path, notice:'You are not admin!' if current_user && !current_user.admin?
   end
 end

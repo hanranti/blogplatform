@@ -1,0 +1,9 @@
+[User|username:string;password_digest:string;admin:boolean;blocked:boolean]++-0..*>[Post|name:string;text:text]
+[User]++-0..*>[Rating|score:integer]
+[Post]++-0..*>[Rating]
+[User]++-0..*>[Comment|text:text]
+[Post]++-0..*>[Comment]
+[User]++-0..*>[Like|like:boolean]
+[Comment]++-0..*>[Like]
+
+https://yuml.me/edit/60fe665f

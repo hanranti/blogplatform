@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
   before_action :set_like, only: [:show, :edit, :update, :destroy]
+  before_action :set_comments, only: [:new, :edit]
   before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
   before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
 
@@ -27,8 +28,11 @@ class LikesController < ApplicationController
   # POST /likes.json
   def create
     @like = Like.where(:user_id => like_params[:user_id], :comment_id => like_params[:comment_id]).first
-    @like = Like.new(like_params) unless @like
-    else @like.update_attribute(:like, like_params[:like])
+    if not @like
+      @like = Like.new(like_params)
+    elsif @like.user == current_user
+      @like.update_attribute(:like, like_params[:like])
+    end
 
     respond_to do |format|
       if @like.save
@@ -69,6 +73,10 @@ class LikesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_like
       @like = Like.find(params[:id])
+    end
+
+    def set_comments
+      @comments = Comment.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
