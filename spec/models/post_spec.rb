@@ -40,20 +40,42 @@ RSpec.describe Post, type: :model do
   end
 
   it "with no ratings has 0 as average_rating" do
-    post = Post.create name:"PostWithNoRatings", text:"123456789"
+    post = Post.create name:"PostWithNoRatings", text:"1234567890"
 
     expect(post.average_rating).to eq(0)
   end
 
   it "has correct average_rating" do
-    post = Post.create name:"Post", text:"123456789"
+    post = Post.create name:"Post", text:"1234567890"
 
     user1 = User.create username:"UserForRatingPosts1", password:"Password123", password_confirmation:"Password123"
     user2 = User.create username:"UserForRatingPosts2", password:"Password123", password_confirmation:"Password123"
     Rating.create score:75, post:post, user:user1
     Rating.create score:35, post:post, user:user2
-    byebug
 
     expect(post.average_rating).to eq(55)
+  end
+
+  it "has correct most_liked_comment" do
+    user1 = User.create username:"UserWithMostLikedComment", password:"Passwrod321", password_confirmation:"Passwrod321"
+    user2 = User.create username:"UserWithSecondLikedComment", password:"Abc123", password_confirmation:"Abc123"
+    user3 = User.create username:"UserWithMostDislikedComment", password:"Cba321", password_confirmation:"Cba321"
+    
+    post = Post.create name:"PostWithComments", text:"1231231231313123123131"
+
+    comment1 = Comment.create text:"CommentWithMostLikes", post:post, user:user1
+    comment2 = Comment.create text:"CommentWithSecondMostLikes", post:post, user:user2
+    comment3 = Comment.create text:"CommentWithMostDislikes", post:post, user:user3
+
+    Like.create user:user1, comment:comment2, like:true
+    Like.create user:user1, comment:comment3, like:false
+
+    Like.create user:user2, comment:comment1, like:true
+    Like.create user:user2, comment:comment3, like:false
+
+    Like.create user:user3, comment:comment1, like:true
+    Like.create user:user3, comment:comment2, like:false
+
+    expect(comment1).to eq(post.most_liked_comment)
   end
 end
