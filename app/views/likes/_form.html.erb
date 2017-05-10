@@ -18,7 +18,7 @@
   <div class="field">
     <%= f.hidden_field :user_id, :value => current_user %>
   </div>
-  <%= f.select :comment_id, options_from_collection_for_select(@comments, :id, :text, selected: @like.comment_id)%>
+  <%= f.select :comment_id, options_from_collection_for_select(@comments, :id, :text, selected: @like.comment_id, :prompt => true)%>
   <div class="actions">
     <%= f.submit %>
   </div>

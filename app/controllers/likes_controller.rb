@@ -3,6 +3,7 @@ class LikesController < ApplicationController
   before_action :set_comments, only: [:new, :edit, :create, :update]
   before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
   before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
+  before_action :ensure_that_there_are_comments, only: [:new, :edit]
 
   # GET /likes
   # GET /likes.json

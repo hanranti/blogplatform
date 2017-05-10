@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   before_action :set_posts, only: [:new, :edit]
   before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
   before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
+  before_action :ensure_that_there_are_posts, only: [:new, :edit]
 
   # GET /comments
   # GET /comments.json

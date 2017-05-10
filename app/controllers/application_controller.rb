@@ -21,4 +21,12 @@ class ApplicationController < ActionController::Base
   def ensure_that_admin
     redirect_to root_path, notice:'You are not admin!' if current_user && !current_user.admin?
   end
+
+  def ensure_that_there_are_comments
+    redirect_to root_path, notice:'There are no comments yet!' if Comment.all.count < 1
+  end
+
+  def ensure_that_there_are_posts
+    redirect_to root_path, notice:'There are no posts yet!' if Post.all.count < 1
+  end
 end
