@@ -32,7 +32,7 @@ class RatingsController < ApplicationController
     @rating.user = current_user
 
     respond_to do |format|
-      if @rating.save
+      if current_user && @rating.save
         format.html { redirect_to :back, notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else

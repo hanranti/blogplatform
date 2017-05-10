@@ -1,6 +1,6 @@
 class LikesController < ApplicationController
   before_action :set_like, only: [:show, :edit, :update, :destroy]
-  before_action :set_comments, only: [:new, :edit]
+  before_action :set_comments, only: [:new, :edit, :create, :update]
   before_action :ensure_that_signed_in, only: [:create, :update, :destroy]
   before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
 
@@ -35,7 +35,7 @@ class LikesController < ApplicationController
     end
 
     respond_to do |format|
-      if @like.save
+      if current_user && @like.save
         format.html { redirect_to :back, notice: 'Like was successfully created.' }
         format.json { render :show, status: :created, location: @like }
       else

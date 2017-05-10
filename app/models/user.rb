@@ -14,9 +14,10 @@ class User < ActiveRecord::Base
 #  validates :username, uniqueness: true,
 #                         length: { minimum:3, maximum: 20 }
   validate do |user|
-      user.errors[:unique_username] << 'This username is already in use!' if User.find_by(username: user.username)
-      user.errors[:username_length] << ' has to be at least 3 letters!' if user.username.length < 3
-      user.errors[:username_length] << ' cannot be more than 20 letters!' if user.username.length > 20
+    user.errors[:username] << 'cannot be blank!' if user.username.nil?
+    user.errors[:this_username] << 'is already in use!' if User.find_by(username: user.username)
+    user.errors[:username_length] << 'has to be at least 3 letters!' if user.username && user.username.length < 3
+    user.errors[:username_length] << 'cannot be more than 20 letters!' if user.username && user.username.length > 20
   end
 
   def to_s
