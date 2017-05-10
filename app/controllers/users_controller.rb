@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :change_blocked_status]
   before_action :ensure_that_signed_in, only: [:update, :destroy]
-  before_action :ensure_that_not_blocked, only: [:create, :update, :destroy]
+  before_action :ensure_that_not_blocked, only: [:create, :update, :destroy, :change_blocked_status]
   before_action :ensure_that_admin, only: [:change_blocked_status]
   # GET /users
   # GET /users.json
