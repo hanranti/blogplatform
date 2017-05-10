@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :score %><br>
+    <%= f.label :score %>(0-100)<br>
     <%= f.number_field :score %>
   </div>
   <%= f.select :post_id, options_from_collection_for_select(@posts, :id, :to_s, selected: @rating.post_id) %>
