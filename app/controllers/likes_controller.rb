@@ -31,8 +31,9 @@ class LikesController < ApplicationController
     @like = Like.where(:user_id => like_params[:user_id], :comment_id => like_params[:comment_id]).first
     if not @like
       @like = Like.new(like_params)
-    elsif @like.user == current_user
-      @like.update_attribute(:like, like_params[:like])
+    elsif @like.user == current_user && @like.update_attribute(:like, like_params[:like])
+      redirect_to :back, notice: 'Like was succesfully modified.'
+      return
     end
 
     respond_to do |format|

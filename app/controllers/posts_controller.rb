@@ -17,6 +17,7 @@ class PostsController < ApplicationController
     @most_liked_comment = @post.most_liked_comment
     @rating = Rating.where(:post_id => params[:id], :user => current_user).first
     @rating = Rating.new unless @rating
+    @like = Like.new
   end
 
   # GET /posts/new

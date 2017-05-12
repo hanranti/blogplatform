@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users
-  resources :likes
+  resources :likes, :except => [:new, :edit, :update]
   resources :ratings
   resources :comments
   resources :posts
