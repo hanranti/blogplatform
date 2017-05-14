@@ -1,13 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Top comments this week</h1>
+<p style="color:#808080">Number of comments this week: <%= @comments.count %></p>
 
 <ul>
   <% @comments.each do |comment| %>
     <li>
       <strong><%= link_to comment.post, comment.post %>: </strong>
       <%= truncate(comment.text, :length => 30) %> 
-      <strong>by <%= link_to comment.user, comment.user %></strong>
+      <strong>by <%= link_to comment.user, comment.user %>,
+      created at: <%= comment.created_at.strftime("%A") %></strong>
       <% if comment.likes_ratio > 0 %>
         <p style="display:inline;color:#008000">+<%= comment.likes_ratio %></p>
       <% elsif comment.likes_ratio < 0 %>

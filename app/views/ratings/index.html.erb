@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Top blogs this week</h1>
+<p style="color:#808080">Number of posts this week: <%= @top_posts.count %></p>
 
 <ul>
   <% @top_posts.each do |post| %>
